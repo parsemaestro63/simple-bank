@@ -1,8 +1,8 @@
-const service = require('../account-owner.js');
+import { accountOwnerServiceFactory } from '../account-owner';
 
 describe('Account Owner', () => {
     test('assigns and returns a name.', () => {
-        const accountOwner = service.accountOwnerServiceFactory('Chris');
+        const accountOwner = accountOwnerServiceFactory('Chris');
         expect(accountOwner.getName()).toEqual('Chris');
     });
 });
