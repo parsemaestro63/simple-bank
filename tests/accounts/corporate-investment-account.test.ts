@@ -1,30 +1,32 @@
-const service = require('../../accounts/corporate-investment-account.js');
-const accountOwner = require('../../account-owner.js');
+import { corporateInvestmentAccountServiceFactory } from '../../accounts/corporate-investment-account';
+import { accountOwnerServiceFactory } from '../../account-owner';
+import IAccount from '../../typings/interfaces/IAccount';
 
-describe('Account', () => {
-    let corporateInvestmentAccount, corporateInvestmentAccount2;
+describe('Corporate Investment account', () => {
+    let corporateInvestmentAccount: IAccount, 
+        corporateInvestmentAccount2: IAccount;
     
     beforeEach(() => {
         const accountParams = {
             id: 1,
             balance: 1000,
-            owner: accountOwner.accountOwnerServiceFactory('Chris')
+            owner: accountOwnerServiceFactory('Chris')
         };
         const accountParams2 = {
             id: 2,
             balance: 800,
-            owner: accountOwner.accountOwnerServiceFactory('Chris')
+            owner: accountOwnerServiceFactory('Chris')
         };
         
-        corporateInvestmentAccount = service.corporateInvestmentAccountServiceFactory(accountParams);
-        corporateInvestmentAccount2 = service.corporateInvestmentAccountServiceFactory(accountParams2);
+        corporateInvestmentAccount = corporateInvestmentAccountServiceFactory(accountParams);
+        corporateInvestmentAccount2 = corporateInvestmentAccountServiceFactory(accountParams2);
     });
 
     test('initializes a corporate investment account with the requried config.', () => {
         expect(corporateInvestmentAccount.getId()).toEqual(1);
         expect(corporateInvestmentAccount.getBalance()).toEqual(1000);
         expect(corporateInvestmentAccount.getOwner().getName()).toEqual('Chris');
-        expect(corporateInvestmentAccount.getAccountType()).toEqual('Corporate Investment');
+        expect(corporateInvestmentAccount.getType()).toEqual('Corporate Investment');
     });
 
    describe('Transfers', () => {

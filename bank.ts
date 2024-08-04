@@ -1,19 +1,23 @@
-const bank = (name) => {
-    let _name = name;
-    let _accounts = [];
 
-    getName = () => {
+import IAccount from './typings/interfaces/IAccount';
+import IBank from './typings/interfaces/IBank';
+
+export const bankServiceFactory = (name: string): IBank => {
+    let _name = name;
+    let _accounts: IAccount[] = [];
+
+    const getName = () => {
         return _name;
     };
 
-    setAccount = (account) => {
+    const setAccount = (account: IAccount) => {
         const accountExists = _accounts.some(_account => _account.getId() === account.getId());
         if (! accountExists) {
             _accounts.push(account);            
         }
     };
 
-    getAccount = (id) => {
+    const getAccount = (id: number) => {
         const account = _accounts.find(_account => _account.getId() === id);
         if (! account) {
             throw new Error('The account searched for was not found');
@@ -22,7 +26,7 @@ const bank = (name) => {
         return account;
     };
 
-    getAccounts = () => {
+    const getAccounts = () => {
         return _accounts;
     };
 
@@ -33,5 +37,3 @@ const bank = (name) => {
         getAccounts
     };
 };
-
-module.exports = { bank };

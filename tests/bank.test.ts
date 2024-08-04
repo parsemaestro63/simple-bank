@@ -1,25 +1,26 @@
-const service = require('../bank.js');
-const accountOwnerService = require('../account-owner.js');
-const checkingAccountService = require('../accounts/checking-account.js');
+import IAccount from "../typings/interfaces/IAccount";
+import { bankServiceFactory } from '../bank';
+import { accountOwnerServiceFactory } from '../account-owner';
+import { checkingAccountServiceFactory } from '../accounts/checking-account';
 
 describe('Bank', () => {
-    let bank = service.bank('Chase'),
-        checkingAccount,
-        checkingAccount2;
+    let bank = bankServiceFactory('Chase'),
+        checkingAccount: IAccount,
+        checkingAccount2: IAccount;
 
     beforeEach(() => {
         const accountParams = {
             id: 1,
             balance: 1000,
-            owner: accountOwnerService.accountOwnerServiceFactory('Chris')
+            owner: accountOwnerServiceFactory('Chris')
         };
-        checkingAccount = checkingAccountService.checkingAccountServiceFactory(accountParams);
+        checkingAccount = checkingAccountServiceFactory(accountParams);
         const accountParams2 = {
             id: 2,
             balance: 1000,
-            owner: accountOwnerService.accountOwnerServiceFactory('Andrew')
+            owner: accountOwnerServiceFactory('Andrew')
         };
-        checkingAccount2 = checkingAccountService.checkingAccountServiceFactory(accountParams2);
+        checkingAccount2 = checkingAccountServiceFactory(accountParams2);
         bank.setAccount(checkingAccount);
         bank.setAccount(checkingAccount2);
 

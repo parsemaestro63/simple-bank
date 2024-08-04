@@ -1,24 +1,25 @@
-const service = require('../../accounts/individual-investment-account.js');
-const accountOwner = require('../../account-owner.js');
+import { individualInvestmentAccountServiceFactory } from '../../accounts/individual-investment-account';
+import { accountOwnerServiceFactory } from '../../account-owner';
+import IAccount from '../../typings/interfaces/IAccount';
 
 describe('Account', () => {
-    let individualInvestmentAccount;
+    let individualInvestmentAccount: IAccount;
     
     beforeEach(() => {
         const accountParams = {
             id: 1,
             balance: 1000,
-            owner: accountOwner.accountOwnerServiceFactory('Chris')
+            owner: accountOwnerServiceFactory('Chris')
         };
         
-        individualInvestmentAccount = service.individualInvestmentAccountServiceFactory(accountParams);
+        individualInvestmentAccount = individualInvestmentAccountServiceFactory(accountParams);
     });
 
     test('initializes an individual investment account with the requried config.', () => {
         expect(individualInvestmentAccount.getId()).toEqual(1);
         expect(individualInvestmentAccount.getBalance()).toEqual(1000);
         expect(individualInvestmentAccount.getOwner().getName()).toEqual('Chris');
-        expect(individualInvestmentAccount.getAccountType()).toEqual('Individual Investment');
+        expect(individualInvestmentAccount.getType()).toEqual('Individual Investment');
     });
 
     describe('Withdrawals', () => {

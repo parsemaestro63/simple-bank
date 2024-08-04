@@ -1,24 +1,25 @@
-const service = require('../../accounts/checking-account.js');
-const accountOwner = require('../../account-owner.js');
+import { checkingAccountServiceFactory } from '../../accounts/checking-account';
+import { accountOwnerServiceFactory } from '../../account-owner';
+import IAccount from '../../typings/interfaces/IAccount';
 
-describe('Account', () => {
-    let checkingAccount;
+describe('Checking account', () => {
+    let checkingAccount: IAccount;
     
     beforeEach(() => {
         const checkingAccountParams = {
             id: 1,
             balance: 1000,
-            owner: accountOwner.accountOwnerServiceFactory('Chris')
+            owner: accountOwnerServiceFactory('Chris')
         };
         
-        checkingAccount = service.checkingAccountServiceFactory(checkingAccountParams);
+        checkingAccount = checkingAccountServiceFactory(checkingAccountParams);
     });
 
     test('initializes a checking account with the requried config.', () => {
         expect(checkingAccount.getId()).toEqual(1);
         expect(checkingAccount.getBalance()).toEqual(1000);
         expect(checkingAccount.getOwner().getName()).toEqual('Chris');
-        expect(checkingAccount.getAccountType()).toEqual('Checking');
+        expect(checkingAccount.getType()).toEqual('Checking');
     });
 
     describe('Deposits', () => {
